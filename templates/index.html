@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Tracker</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f8fc09;
+    padding: 20px;
+}
+
+h1 {
+    color: #000;
+    text-align: center;
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+.board {
+    display: flex;
+    padding: 20px;
+    margin-top: 20px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.column {
+    background-color: rgba(26, 188, 156, 0.7);
+    border-radius: 17px;
+    padding: 20px;
+    width: 300px;
+    -webkit-backdrop-filter: blur(34px);
+    backdrop-filter: blur(34px);
+}
+
+.column:hover {
+    background-color: #325344;
+    transform: translateY(-3px);
+}
+
+.column h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #000;
+    font-weight: bold;
+}
+
+.task-form {
+    background: rgb(39, 174, 96, 0.6);
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: move;
+    border: 1px solid rgb(255, 255, 255, 0.3);
+}
+
+.task-form h3 {
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+}
+
+.task-form p {
+    font-size: 14px;
+    color: #222;
+}
+
+.delete-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+}
+
+.delete-btn:hover {
+    background-color: #1db2cc;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+}
+
+.add-btn {
+    background: rgb(22, 160, 133, 0.9);
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+}
+.add-btn:hover {
+    background-color: #25eb0b;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+    transform: translateY(-3px);
+}
+
+input, textarea {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    border: 3px solid #6853e2;
+    border-radius: 4px;
+    background: white;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.form-btn {
+    padding: 12px 8px;
+    margin: 10px 5px 0 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+    font-size: 16px;
+}
+.task-input:hover {
+    border-color: #e92c2c;
+    box-shadow: 0 0 5px rgba(104, 83, 226, 0.5);
+    transform: translateX(-7px);
+}
+
+.td:hover {
+    border-color: #e92c2c;
+    box-shadow: 0 0 5px rgba(104, 83, 226, 0.5);
+    transform: translateX(-7px);
+}
+
+.form-btn:hover {
+    background-color: #72cc1d;
+    transform: translateX(-3px);
+}
+
+.task-form {
+    display: none;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.task-form:hover {
+    background-color: rgb(204, 201, 29);
+    transform: translateY(-3px);
+}
+
+.save-btn {
+    background-color: #033509;
+    color: rgb(163, 175, 166);    
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.save-btn:hover {
+    background-color: rgb(9, 195, 219);
+    transform: translateY(-3px);
+}
+
+
+.cancel-btn {
+    background-color: #fc4444;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+.cancel-btn:hover {
+    background-color: rgb(9, 195, 219);
+    transform: translateY(-3px);
+}
+
+    </style>
+</head>
+<body>
+    <h1>Task Tracker</h1>
+    
+    <div class="board">
+        <div class="column">
+            <h2>To Do</h2>
+            <div id="todo"></div>
+            <button class="add-btn" onclick="showForm('todo')">+ Add Task</button>
+            <div id="form-todo" class="task-form">
+                <input type="text" id="title-todo" placeholder="Title">
+                <textarea id="desc-todo" placeholder="Description"></textarea>
+                <button class="form-btn save-btn" onclick="addTask('todo')">Save</button>
+                <button class="form-btn cancel-btn" onclick="hideForm('todo')">Cancel</button>
+            </div>
+        </div>
+
+        <div class="column">
+            <h2>In Progress</h2>
+            <div id="progress"></div>
+            <button class="add-btn" onclick="showForm('progress')">+ Add Task</button>
+            <div id="form-progress" class="task-form">
+                <input type="text" id="title-progress" placeholder="Title">
+                <textarea id="desc-progress" placeholder="Description"></textarea>
+                <button class="form-btn save-btn" onclick="addTask('progress')">Save</button>
+                <button class="form-btn cancel-btn" onclick="hideForm('progress')">Cancel</button>
+            </div>
+        </div>
+
+        <div class="column">
+            <h2>Done</h2>
+            <div id="done"></div>
+            <button class="add-btn" onclick="showForm('done')">+ Add Task</button>
+            <div id="form-done" class="task-form">
+                <input type="text" id="title-done" placeholder="Title">
+                <textarea id="desc-done" placeholder="Description"></textarea>
+                <button class="form-btn save-btn" onclick="addTask('done')">Save</button>
+                <button class="form-btn cancel-btn" onclick="hideForm('done')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tasks = {todo: [], progress: [], done: []};
+
+        window.onload = function() {
+            loadTasks();
+        };
+
+        async function loadTasks() {
+            const response = await fetch('/api/tasks');
+            tasks = await response.json();
+            renderAll();
+        }
+
+        function showForm(column) {
+            document.getElementById('form-' + column).style.display = 'block';
+        }
+
+        function hideForm(column) {
+            document.getElementById('form-' + column).style.display = 'none';
+            document.getElementById('title-' + column).value = '';
+            document.getElementById('desc-' + column).value = '';
+        }
+
+        async function addTask(column) {
+            const title = document.getElementById('title-' + column).value;
+            const desc = document.getElementById('desc-' + column).value;
+            
+            if (!title) {
+                alert('Please enter a title');
+                return;
+            }
+
+            const response = await fetch('/api/add_task', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    column: column,
+                    title: title,
+                    description: desc
+                })
+            });
+
+            tasks = await response.json();
+            renderAll();
+            hideForm(column);
+        }
+
+        async function deleteTask(column, id) {
+            const response = await fetch('/api/delete_task', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    column: column,
+                    task_id: id
+                })
+            });
+
+            tasks = await response.json();
+            renderAll();
+        }
+
+        function renderAll() {
+            renderColumn('todo');
+            renderColumn('progress');
+            renderColumn('done');
+        }
+
+        function renderColumn(column) {
+            const container = document.getElementById(column);
+            container.innerHTML = '';
+            
+            tasks[column].forEach(task => {
+                const div = document.createElement('div');
+                div.className = 'task';
+                div.draggable = true;
+                div.id = 'task-' + task.id;
+                
+                div.innerHTML = `
+                    <button class="delete-btn" onclick="deleteTask('${column}', ${task.id})">Delete</button>
+                    <h3>${task.title}</h3>
+                    <p>${task.description || ''}</p>
+                `;
+                
+                div.ondragstart = function(e) {
+                    e.dataTransfer.setData('taskId', task.id);
+                    e.dataTransfer.setData('fromColumn', column);
+                };
+                
+                container.appendChild(div);
+            });
+
+            container.ondragover = function(e) {
+                e.preventDefault();
+            };
+
+            container.ondrop = async function(e) {
+                e.preventDefault();
+                const taskId = parseFloat(e.dataTransfer.getData('taskId'));
+                const fromColumn = e.dataTransfer.getData('fromColumn');
+                
+                if (fromColumn !== column) {
+                    const response = await fetch('/api/move_task', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({
+                            from_column: fromColumn,
+                            to_column: column,
+                            task_id: taskId
+                        })
+                    });
+
+                    tasks = await response.json();
+                    renderAll();
+                }
+            };
+        }
+    </script>
+</body>
+</html>
