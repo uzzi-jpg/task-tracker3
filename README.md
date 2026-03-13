@@ -1,51 +1,195 @@
-# Simple Task Tracker
+# Task Tracker Enhanced - With Priorities & Search
 
-A basic task tracking app like Trello.
+Enhanced version of the task tracker with priority levels and search functionality!
 
-## Features
+## 🆕 New Features
 
-- 3 columns: To Do, In Progress, Done
-- Add, delete, and drag tasks between columns
-- Saves to localStorage (or backend if available)
+### 1. ✅ Task Priorities
+- **High Priority** (🔴 Red) - Urgent tasks
+- **Medium Priority** (🟡 Yellow) - Normal tasks
+- **Low Priority** (🟢 Green) - Can wait
 
-## Quick Start
+**Features:**
+- Color-coded priority badges on each task
+- Color-coded left border on task cards
+- Automatic sorting by priority (High → Medium → Low)
+- Select priority when creating task
 
-### Option 1: Just HTML
+### 2. ✅ Search Functionality
+- Search by task title or description
+- Real-time search across all columns
+- "Clear" button to reset search
+- Shows "No matching tasks" if nothing found
+- Press Enter to search
 
-1. Open `index.html` in your browser
-2. Tasks save automatically to your browser
+## 📸 Visual Changes
 
-### Option 2: With Python Backend
+### **Top Bar:**
+```
+📋 Task Tracker Pro | [Search Box] [Search] [Clear]
+```
 
-1. Install Flask:
+### **Task Cards Now Show:**
+```
+┌─────────────────────────────┐
+│ 🔴 HIGH            [Delete] │ ← Priority badge
+│ Complete Project            │ ← Title
+│ Finish by Friday            │ ← Description
+└─────────────────────────────┘
+ ▲ Red left border for high priority
+```
 
-   ```bash
-   pip install Flask flask-cors
-   ```
+### **Add Task Form:**
+```
+Task Title: [_______________]
+Description: [____________]
+Priority: [🟢 Low ▼]  ← New dropdown
+```
 
-2. Run the server:
+## 🗄️ Database Changes
 
-   ```bash
-   python app.py
-   ```
+New column added to tasks table:
 
-3. Open `index.html` in your browser
+```sql
+ALTER TABLE tasks ADD COLUMN priority TEXT DEFAULT 'medium';
+```
 
-## Files
+**Priority values:**
+- `'high'` - Red, sorted first
+- `'medium'` - Yellow, sorted second (default)
+- `'low'` - Green, sorted last
 
-- `index.html` - The webpage
-- `app.py` - Python Flask backend
-- `requirements.txt` - Python packages needed
+## 🚀 How to Use
 
-## How to Use
+### Installation
 
-1. Click "+ Add Task" to create a task
-2. Drag tasks between columns to change status
-3. Click "Delete" to remove a task
+```bash
+pip install Flask
+```
 
-## API Endpoints (if using backend)
+### Running
 
-- `GET /tasks` - Get all tasks
-- `POST /tasks` - Save all tasks
-- `POST /tasks/<column>` - Add task to column
-- `DELETE /tasks/<column>/<id>` - Delete task
+```bash
+python app.py
+```
+
+Open: http://localhost:5000
+
+### Using Priorities
+
+1. Click "+ Add Task"
+2. Fill in title and description
+3. Select priority from dropdown:
+   - 🔴 High - Critical tasks
+   - 🟡 Medium - Regular tasks
+   - 🟢 Low - Nice to have
+4. Click "Save"
+
+Tasks automatically sort by priority!
+
+### Using Search
+
+1. Type in the search box at the top
+2. Click "Search" or press Enter
+3. See filtered results across all columns
+4. Click "Clear" to show all tasks again
+
+**Search works on:**
+- Task titles
+- Task descriptions
+
+**Example searches:**
+- "urgent" - finds all tasks with "urgent" in title/description
+- "meeting" - finds all meeting-related tasks
+- "python" - finds all Python-related tasks
+
+## 📊 Priority Sorting
+
+Tasks are automatically sorted within each column:
+
+```
+To Do
+├── 🔴 Fix critical bug       (High)
+├── 🔴 Client presentation    (High)
+├── 🟡 Update documentation   (Medium)
+├── 🟡 Code review           (Medium)
+└── 🟢 Refactor old code     (Low)
+```
+
+High priority tasks always appear at the top!
+
+## 🎨 Color Scheme
+
+| Priority | Badge Color | Border Color | Background |
+|----------|-------------|--------------|------------|
+| High | Red (#e74c3c) | Red | Light red |
+| Medium | Yellow (#f39c12) | Yellow | Light yellow |
+| Low | Green (#27ae60) | Green | Light green |
+
+## 💡 Tips
+
+### Prioritization Best Practices:
+- **High**: Urgent AND important
+- **Medium**: Important but not urgent
+- **Low**: Nice to have, not urgent
+
+### Search Tips:
+- Search is case-insensitive
+- Partial matches work ("meet" finds "meeting")
+- Clear search to see all tasks again
+- Search across all columns simultaneously
+
+## 📁 File Structure
+
+```
+task-tracker-enhanced/
+├── app.py              # Flask with priorities & search
+├── templates/
+│   └── index.html     # Enhanced UI
+├── tasks.db           # SQLite database
+└── README.md          # This file
+```
+
+## 🔄 Migration from Old Version
+
+If you have an existing `tasks.db`, add the priority column:
+
+```bash
+sqlite3 tasks.db
+```
+
+```sql
+ALTER TABLE tasks ADD COLUMN priority TEXT DEFAULT 'medium';
+```
+
+Existing tasks will default to 'medium' priority.
+
+## 🆚 Comparison
+
+| Feature | Old Version | Enhanced Version |
+|---------|-------------|------------------|
+| Add tasks | ✅ | ✅ |
+| Delete tasks | ✅ | ✅ |
+| Drag & drop | ✅ | ✅ |
+| Priorities | ❌ | ✅ Color-coded |
+| Search | ❌ | ✅ Full-text |
+| Sorting | None | ✅ By priority |
+| Top bar | None | ✅ With search |
+
+## 🎯 Future Enhancements
+
+Easy to add:
+- Due dates
+- Task tags
+- Filter by priority only
+- Export tasks
+- Task statistics by priority
+
+## ⌨️ Keyboard Shortcuts
+
+- **Enter** in search box → Search
+- **Drag** task → Move to column
+
+---
+
+**Enjoy your enhanced task tracker!** 🎉

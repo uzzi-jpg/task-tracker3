@@ -3,184 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Tracker</title>
+    <title>Task Tracker Pro</title>
     <style>
         body {
-    font-family: Arial, sans-serif;
-    background-color: #f8fc09;
-    padding: 20px;
-}
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f4d03f 0%, #16a085 100%);
+            padding: 0;
+            min-height: 100vh;
+            margin: 0;
+        }
 
-h1 {
-    color: #000;
-    text-align: center;
-    font-size: 48px;
-    font-weight: bold;
-    margin-bottom: 40px;
-}
+        .top-bar {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
 
-.board {
-    display: flex;
-    padding: 20px;
-    margin-top: 20px;
-    margin-right: auto;
-    margin-left: auto;
-}
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+        }
 
-.column {
-    background-color: rgba(26, 188, 156, 0.7);
-    border-radius: 17px;
-    padding: 20px;
-    width: 300px;
-    -webkit-backdrop-filter: blur(34px);
-    backdrop-filter: blur(34px);
-}
+        .search-container {
+            display: flex;
+            gap: 10px;
+        }
 
-.column:hover {
-    background-color: #325344;
-    transform: translateY(-3px);
-}
+        .search-box {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            width: 300px;
+            font-size: 14px;
+        }
 
-.column h2 {
-    margin-bottom: 20px;
-    font-size: 22px;
-    color: #000;
-    font-weight: bold;
-}
+        .search-btn {
+            padding: 10px 20px;
+            background: #00C853;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+        }
 
-.task-form {
-    background: rgb(39, 174, 96, 0.6);
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-    cursor: move;
-    border: 1px solid rgb(255, 255, 255, 0.3);
-}
+        .clear-search-btn {
+            padding: 10px 20px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+        }
 
-.task-form h3 {
-    margin-bottom: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #000;
-}
+        h1 {
+            text-align: center;
+            color: #000;
+            font-size: 48px;
+            font-weight: bold;
+            margin: 30px 0;
+        }
 
-.task-form p {
-    font-size: 14px;
-    color: #222;
-}
+        .board {
+            display: flex;
+            gap: 20px;
+            padding: 0 30px 30px 30px;
+        }
 
-.delete-btn {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 5px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    float: right;
-    font-weight: bold;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s;
-}
+        .column {
+            background: rgba(26, 188, 156, 0.7);
+            padding: 20px;
+            border-radius: 12px;
+            width: 300px;
+            backdrop-filter: blur(10px);
+        }
 
-.delete-btn:hover {
-    background-color: #1db2cc;
-    transform: translateY(-3px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-}
+        .column h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #000;
+            font-weight: bold;
+        }
 
-.add-btn {
-    background: rgb(22, 160, 133, 0.9);
-    color: white;
-    border: none;
-    padding: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-    font-weight: bold;
-    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s;
-}
-.add-btn:hover {
-    background-color: #25eb0b;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
-    transform: translateY(-3px);
-}
+        .task {
+            background: rgba(39, 174, 96, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: move;
+            color: #000;
+            position: relative;
+        }
 
-input, textarea {
-    width: 100%;
-    padding: 11px;
-    margin-top: 10px;
-    border: 3px solid #6853e2;
-    border-radius: 4px;
-    background: white;
-    font-size: 14px;
-    box-sizing: border-box;
-}
+        .task.priority-high {
+            border-left: 5px solid #e74c3c;
+            background: rgba(231, 76, 60, 0.2);
+        }
 
-.form-btn {
-    padding: 12px 8px;
-    margin: 10px 5px 0 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: all 0.3s;
-    font-size: 16px;
-}
-.task-input:hover {
-    border-color: #e92c2c;
-    box-shadow: 0 0 5px rgba(104, 83, 226, 0.5);
-    transform: translateX(-7px);
-}
+        .task.priority-medium {
+            border-left: 5px solid #f39c12;
+            background: rgba(243, 156, 18, 0.2);
+        }
 
-.td:hover {
-    border-color: #e92c2c;
-    box-shadow: 0 0 5px rgba(104, 83, 226, 0.5);
-    transform: translateX(-7px);
-}
+        .task.priority-low {
+            border-left: 5px solid #27ae60;
+            background: rgba(39, 174, 96, 0.2);
+        }
 
-.form-btn:hover {
-    background-color: #72cc1d;
-    transform: translateX(-3px);
-}
+        .priority-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
 
-.task-form {
-    display: none;
-    margin-top: 10px;
-    width: 100%;
-}
+        .priority-badge.high {
+            background: #e74c3c;
+            color: white;
+        }
 
-.task-form:hover {
-    background-color: rgb(204, 201, 29);
-    transform: translateY(-3px);
-}
+        .priority-badge.medium {
+            background: #f39c12;
+            color: white;
+        }
 
-.save-btn {
-    background-color: #033509;
-    color: rgb(163, 175, 166);    
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
+        .priority-badge.low {
+            background: #27ae60;
+            color: white;
+        }
 
-.save-btn:hover {
-    background-color: rgb(9, 195, 219);
-    transform: translateY(-3px);
-}
+        .task h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #000;
+        }
 
+        .task p {
+            font-size: 14px;
+            color: #222;
+        }
 
-.cancel-btn {
-    background-color: #fc4444;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    color: white;
-}
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
 
-.cancel-btn:hover {
-    background-color: rgb(9, 195, 219);
-    transform: translateY(-3px);
-}
+        .delete-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
 
+        .add-btn {
+            width: 100%;
+            padding: 15px;
+            background: rgba(22, 160, 133, 0.9);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .add-btn:hover {
+            background: rgba(22, 160, 133, 1);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.4);
+            transform: translateY(-2px);
+        }
+
+        .task-form {
+            display: none;
+            margin-top: 15px;
+            background: #e74c3c;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #3498db;
+            border-radius: 6px;
+            background: white;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .form-label {
+            color: white;
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        .form-btn {
+            padding: 12px 30px;
+            margin: 10px 10px 0 0;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        .save-btn {
+            background: white;
+            color: #000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .save-btn:hover {
+            background: #ecf0f1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .cancel-btn {
+            background: white;
+            color: #000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .cancel-btn:hover {
+            background: #ecf0f1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
+    <div class="top-bar">
+        <div class="logo">📋 Task Tracker Pro</div>
+        <div class="search-container">
+            <input type="text" class="search-box" id="searchInput" placeholder="🔍 Search tasks...">
+            <button class="search-btn" onclick="searchTasks()">Search</button>
+            <button class="clear-search-btn" onclick="clearSearch()">Clear</button>
+        </div>
+    </div>
+
     <h1>Task Tracker</h1>
     
     <div class="board">
@@ -189,10 +279,23 @@ input, textarea {
             <div id="todo"></div>
             <button class="add-btn" onclick="showForm('todo')">+ Add Task</button>
             <div id="form-todo" class="task-form">
-                <input type="text" id="title-todo" placeholder="Title">
-                <textarea id="desc-todo" placeholder="Description"></textarea>
-                <button class="form-btn save-btn" onclick="addTask('todo')">Save</button>
-                <button class="form-btn cancel-btn" onclick="hideForm('todo')">Cancel</button>
+                <label class="form-label">Task Title</label>
+                <input type="text" id="title-todo" placeholder="Enter task title">
+                
+                <label class="form-label">Description</label>
+                <textarea id="desc-todo" placeholder="Enter description"></textarea>
+                
+                <label class="form-label">Priority</label>
+                <select id="priority-todo">
+                    <option value="low">🟢 Low</option>
+                    <option value="medium" selected>🟡 Medium</option>
+                    <option value="high">🔴 High</option>
+                </select>
+                
+                <div>
+                    <button class="form-btn save-btn" onclick="addTask('todo')">Save</button>
+                    <button class="form-btn cancel-btn" onclick="hideForm('todo')">Cancel</button>
+                </div>
             </div>
         </div>
 
@@ -201,10 +304,23 @@ input, textarea {
             <div id="progress"></div>
             <button class="add-btn" onclick="showForm('progress')">+ Add Task</button>
             <div id="form-progress" class="task-form">
-                <input type="text" id="title-progress" placeholder="Title">
-                <textarea id="desc-progress" placeholder="Description"></textarea>
-                <button class="form-btn save-btn" onclick="addTask('progress')">Save</button>
-                <button class="form-btn cancel-btn" onclick="hideForm('progress')">Cancel</button>
+                <label class="form-label">Task Title</label>
+                <input type="text" id="title-progress" placeholder="Enter task title">
+                
+                <label class="form-label">Description</label>
+                <textarea id="desc-progress" placeholder="Enter description"></textarea>
+                
+                <label class="form-label">Priority</label>
+                <select id="priority-progress">
+                    <option value="low">🟢 Low</option>
+                    <option value="medium" selected>🟡 Medium</option>
+                    <option value="high">🔴 High</option>
+                </select>
+                
+                <div>
+                    <button class="form-btn save-btn" onclick="addTask('progress')">Save</button>
+                    <button class="form-btn cancel-btn" onclick="hideForm('progress')">Cancel</button>
+                </div>
             </div>
         </div>
 
@@ -213,16 +329,30 @@ input, textarea {
             <div id="done"></div>
             <button class="add-btn" onclick="showForm('done')">+ Add Task</button>
             <div id="form-done" class="task-form">
-                <input type="text" id="title-done" placeholder="Title">
-                <textarea id="desc-done" placeholder="Description"></textarea>
-                <button class="form-btn save-btn" onclick="addTask('done')">Save</button>
-                <button class="form-btn cancel-btn" onclick="hideForm('done')">Cancel</button>
+                <label class="form-label">Task Title</label>
+                <input type="text" id="title-done" placeholder="Enter task title">
+                
+                <label class="form-label">Description</label>
+                <textarea id="desc-done" placeholder="Enter description"></textarea>
+                
+                <label class="form-label">Priority</label>
+                <select id="priority-done">
+                    <option value="low">🟢 Low</option>
+                    <option value="medium" selected>🟡 Medium</option>
+                    <option value="high">🔴 High</option>
+                </select>
+                
+                <div>
+                    <button class="form-btn save-btn" onclick="addTask('done')">Save</button>
+                    <button class="form-btn cancel-btn" onclick="hideForm('done')">Cancel</button>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         let tasks = {todo: [], progress: [], done: []};
+        let isSearching = false;
 
         window.onload = function() {
             loadTasks();
@@ -242,11 +372,13 @@ input, textarea {
             document.getElementById('form-' + column).style.display = 'none';
             document.getElementById('title-' + column).value = '';
             document.getElementById('desc-' + column).value = '';
+            document.getElementById('priority-' + column).value = 'medium';
         }
 
         async function addTask(column) {
             const title = document.getElementById('title-' + column).value;
             const desc = document.getElementById('desc-' + column).value;
+            const priority = document.getElementById('priority-' + column).value;
             
             if (!title) {
                 alert('Please enter a title');
@@ -259,7 +391,8 @@ input, textarea {
                 body: JSON.stringify({
                     column: column,
                     title: title,
-                    description: desc
+                    description: desc,
+                    priority: priority
                 })
             });
 
@@ -282,6 +415,31 @@ input, textarea {
             renderAll();
         }
 
+        async function searchTasks() {
+            const query = document.getElementById('searchInput').value;
+            
+            if (!query.trim()) {
+                alert('Please enter a search term');
+                return;
+            }
+
+            isSearching = true;
+            const response = await fetch('/api/search', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ query: query })
+            });
+
+            tasks = await response.json();
+            renderAll();
+        }
+
+        async function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            isSearching = false;
+            loadTasks();
+        }
+
         function renderAll() {
             renderColumn('todo');
             renderColumn('progress');
@@ -292,14 +450,26 @@ input, textarea {
             const container = document.getElementById(column);
             container.innerHTML = '';
             
+            if (tasks[column].length === 0 && isSearching) {
+                container.innerHTML = '<div class="no-results">No matching tasks found</div>';
+                return;
+            }
+
             tasks[column].forEach(task => {
                 const div = document.createElement('div');
-                div.className = 'task';
+                div.className = 'task priority-' + (task.priority || 'medium');
                 div.draggable = true;
                 div.id = 'task-' + task.id;
                 
+                const priorityText = {
+                    'high': '🔴 HIGH',
+                    'medium': '🟡 MEDIUM',
+                    'low': '🟢 LOW'
+                };
+                
                 div.innerHTML = `
                     <button class="delete-btn" onclick="deleteTask('${column}', ${task.id})">Delete</button>
+                    <span class="priority-badge ${task.priority || 'medium'}">${priorityText[task.priority || 'medium']}</span>
                     <h3>${task.title}</h3>
                     <p>${task.description || ''}</p>
                 `;
@@ -337,6 +507,13 @@ input, textarea {
                 }
             };
         }
+
+        // Allow Enter key to search
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchTasks();
+            }
+        });
     </script>
 </body>
 </html>
