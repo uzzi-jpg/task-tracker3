@@ -105,28 +105,9 @@ Tasks automatically sort by priority!
 
 ## 📊 Priority Sorting
 
-Tasks are automatically sorted within each column:
-
-```
-To Do
-├── 🔴 Fix critical bug       (High)
-├── 🔴 Client presentation    (High)
-├── 🟡 Update documentation   (Medium)
-├── 🟡 Code review           (Medium)
-└── 🟢 Refactor old code     (Low)
-```
-
+Tasks are automatically sorted within each column
 High priority tasks always appear at the top!
 
-## 🎨 Color Scheme
-
-| Priority | Badge Color | Border Color | Background |
-|----------|-------------|--------------|------------|
-| High | Red (#e74c3c) | Red | Light red |
-| Medium | Yellow (#f39c12) | Yellow | Light yellow |
-| Low | Green (#27ae60) | Green | Light green |
-
-## 💡 Tips
 
 ### Prioritization Best Practices:
 - **High**: Urgent AND important
